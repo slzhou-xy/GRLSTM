@@ -1,4 +1,4 @@
-from GRLSTM_Model import ResLSTM
+from GRLSTM_Model import GRLSTM
 from pars_args import args
 from Data_Loader import TrainValueDataLoader
 from Trainer import Trainer
@@ -14,9 +14,7 @@ def train():
 
     train_data_loader = TrainValueDataLoader(args.train_file, args.poi_file, args.batch_size)
 
-    model = ResLSTM(args.nodes, args.latent_dim, device, args.poi_file, batch_first=True)
-
-    # model.load_state_dict(torch.load('saved_models_tmp/epoch_146.pt'))
+    model = GRLSTM(args.nodes, args.latent_dim, device, args.poi_file, batch_first=True)
 
     trainer = Trainer(
         model=model,

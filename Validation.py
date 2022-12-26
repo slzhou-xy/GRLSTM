@@ -6,7 +6,7 @@ import os
 import logging
 from logg import setup_logger
 from pars_args import args
-from GRLSTM_Model import ResLSTM
+from GRLSTM_Model import GRLSTM
 from tqdm import tqdm
 from Data_Loader import load_traindata
 from Data_Loader import load_valdata
@@ -35,7 +35,7 @@ def eval_model():
     emb_train = torch.zeros((len(train_x), args.latent_dim), device=device, requires_grad=False)
 
     K = [1, 5, 10, 20, 50]
-    model = ResLSTM(args.nodes, args.latent_dim, device, args.poi_file, batch_first=True).to(device)
+    model = GRLSTM(args.nodes, args.latent_dim, device, args.poi_file, batch_first=True).to(device)
 
     rec = torch.zeros((val_x.shape[0], len(K)), device=device, requires_grad=False)
 
@@ -45,7 +45,7 @@ def eval_model():
     max_rec_v = -1
     max_epoch = -1
 
-    for epoch in range(250, 300):
+    for epoch in range(125, 126):
         model_name = 'epoch_' + str(epoch) + '.pt'
 
         model_f = '%s/%s' % (args.save_folder, model_name)

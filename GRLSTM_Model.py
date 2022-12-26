@@ -9,9 +9,9 @@ import torch.nn.functional as F
 import numpy as np
 
 
-class ResLSTM(nn.Module):
+class GRLSTM(nn.Module):
     def __init__(self, nodes, latent_dim, device, poi_file, batch_first=True):
-        super(ResLSTM, self).__init__()
+        super(GRLSTM, self).__init__()
         self.latent_dim = latent_dim
         self.device = device
         self.batch_first = batch_first
@@ -20,13 +20,7 @@ class ResLSTM(nn.Module):
 
         self.poi_neighbors = np.load(poi_file, allow_pickle=True)['neighbors']
 
-        # addddddd
-        # self.neighbors_lens = np.load(poi_file, allow_pickle=True)['lens']
-
         self.poi_features = torch.randn(nodes, latent_dim).to(self.device)
-
-        # self.LSTM = nn.LSTM(input_size=latent_dim, hidden_size=latent_dim,
-        #                     num_layers=args.lstm_layers, batch_first=True)
 
         self.lstm_list = nn.ModuleList([
             nn.LSTM(input_size=latent_dim, hidden_size=latent_dim, num_layers=1, batch_first=True)
@@ -39,18 +33,9 @@ class ResLSTM(nn.Module):
         batch_x_flatten = batch_x_flatten.cpu().numpy()
         neighbors = self.poi_neighbors[batch_x_flatten]
 
-        # addddddd
-        # lens = self.neighbors_lens[batch_x_flatten]
-
         batch_x_flatten = batch_x_flatten.repeat(neighbors.shape[1])
 
-        # addddddd
-        # batch_x_flatten = batch_x_flatten.repeat(lens)
-
         neighbors = neighbors.reshape(-1)
-
-        # addddddd
-        # neighbors = np.array([poi for l in neighbors for poi in l], dtype=int)
 
         edge_index = np.vstack((neighbors, batch_x_flatten))
         batch_x_flatten = np.vstack((batch_x_flatten, batch_x_flatten))
@@ -70,10 +55,6 @@ class ResLSTM(nn.Module):
 
             batch_emb_pack = rnn_utils.pack_padded_sequence(batch_emb, batch_x_len, batch_first=self.batch_first)
 
-            # out_emb, _ = self.LSTM(batch_emb_pack)
-            # out_emb_pad, out_emb_len = rnn_utils.pad_packed_sequence(out_emb, batch_first=self.batch_first)
-
-            # 带有Residual的LSTM
             for lstm in self.lstm_list[:-1]:
                 out_emb, _ = lstm(batch_emb_pack)
                 out_emb_pad, out_emb_len = rnn_utils.pad_packed_sequence(out_emb, batch_first=self.batch_first)
@@ -109,10 +90,6 @@ class ResLSTM(nn.Module):
                                                               sorted_seq_lengths,
                                                               batch_first=self.batch_first)
 
-            # out_n_emb, _ = self.LSTM(batch_emb_n_pack)
-            # out_n_emb_pad, out_n_emb_len = rnn_utils.pad_packed_sequence(out_n_emb, batch_first=self.batch_first)
-
-            # 带有Residual的LSTM
             for lstm in self.lstm_list[:-1]:
                 out_n_emb, _ = lstm(batch_emb_n_pack)
                 out_n_emb_pad, out_n_emb_len = rnn_utils.pad_packed_sequence(out_n_emb, batch_first=self.batch_first)

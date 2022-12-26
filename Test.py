@@ -5,7 +5,7 @@ import random
 import logging
 from logg import setup_logger
 from pars_args import args
-from GRLSTM_Model import ResLSTM
+from GRLSTM_Model import GRLSTM
 from Data_Loader import load_traindata
 from Data_Loader import load_testdata
 from Data_Loader import TestValueDataLoader
@@ -32,7 +32,7 @@ def eval_model():
 
     emb_train = np.zeros((len(train_x), args.latent_dim))
 
-    model = ResLSTM(args.nodes, args.latent_dim, device, args.poi_file, batch_first=True).to(device)
+    model = GRLSTM(args.nodes, args.latent_dim, device, args.poi_file, batch_first=True).to(device)
 
     epoch = open('GRLSTM_eva.log').read().splitlines()[-1][-3:]
 
