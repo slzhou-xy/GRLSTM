@@ -15,7 +15,7 @@ parser.add_argument('--train_file',                 default='data/train_set.npz'
 parser.add_argument('--val_file',                   default='data/val_set.npz')
 parser.add_argument('--test_file',                  default='data/test_set.npz')
 parser.add_argument('--poi_file',                   default='data/transh_poi_10.npz')
-parser.add_argument('--nodes',          type=int,   default=95581,                   help='Newyork=95581, Beijing=28342')
+parser.add_argument('--nodes',          type=int,   default=28342,                   help='Newyork=95581, Beijing=28342')
 
 # ===================== model ====================== #
 parser.add_argument('--latent_dim',     type=int,   default=128)
