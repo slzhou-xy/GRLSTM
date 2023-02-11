@@ -4,7 +4,7 @@ import logging
 import torch.nn.utils.rnn as rnn_utils
 from torch.autograd import Variable
 from pars_args import args
-from GAT_emb import GATLayer
+from torch_geometric.nn import GATConv
 import torch.nn.functional as F
 import numpy as np
 
@@ -23,11 +23,13 @@ class GRLSTM(nn.Module):
         self.poi_features = torch.randn(nodes, latent_dim).to(self.device)
 
         self.lstm_list = nn.ModuleList([
-            nn.LSTM(input_size=latent_dim, hidden_size=latent_dim, num_layers=1, batch_first=True)
+            nn.LSTM(input_size=latent_dim, hidden_size=latent_dim,
+                    num_layers=1, batch_first=True)
             for _ in range(args.lstm_layers)
         ])
 
-        self.gat = GATLayer(latent_dim)
+        self.gat = GATConv(in_channels=latent_dim, out_channels=16,
+                           heads=8, dropout=0.1, concat=True)
 
     def _construct_edge_index(self, batch_x_flatten):
         batch_x_flatten = batch_x_flatten.cpu().numpy()
@@ -53,15 +55,19 @@ class GRLSTM(nn.Module):
             embedding_weight = self.gat(self.poi_features, batch_edge_index)
             batch_emb = embedding_weight[batch_x]
 
-            batch_emb_pack = rnn_utils.pack_padded_sequence(batch_emb, batch_x_len, batch_first=self.batch_first)
+            batch_emb_pack = rnn_utils.pack_padded_sequence(
+                batch_emb, batch_x_len, batch_first=self.batch_first)
 
             for lstm in self.lstm_list[:-1]:
                 out_emb, _ = lstm(batch_emb_pack)
-                out_emb_pad, out_emb_len = rnn_utils.pad_packed_sequence(out_emb, batch_first=self.batch_first)
+                out_emb_pad, out_emb_len = rnn_utils.pad_packed_sequence(
+                    out_emb, batch_first=self.batch_first)
                 out_emb_pad = batch_emb + F.relu(out_emb_pad)
-                batch_emb_pack = rnn_utils.pack_padded_sequence(out_emb_pad, out_emb_len, batch_first=self.batch_first)
+                batch_emb_pack = rnn_utils.pack_padded_sequence(
+                    out_emb_pad, out_emb_len, batch_first=self.batch_first)
             out_emb, _ = self.lstm_list[-1](batch_emb_pack)
-            out_emb_pad, out_emb_len = rnn_utils.pad_packed_sequence(out_emb, batch_first=self.batch_first)
+            out_emb_pad, out_emb_len = rnn_utils.pad_packed_sequence(
+                out_emb, batch_first=self.batch_first)
 
             idx = (torch.LongTensor(batch_x_len) - 1).view(-1, 1).expand(
                 len(batch_x_len), out_emb_pad.size(2))
@@ -82,7 +88,8 @@ class GRLSTM(nn.Module):
             embedding_weight = self.gat(self.poi_features, batch_n_edge_index)
             batch_n_emb = embedding_weight[batch_n]
 
-            sorted_seq_lengths, indices = torch.sort(torch.IntTensor(batch_n_len), descending=True)
+            sorted_seq_lengths, indices = torch.sort(
+                torch.IntTensor(batch_n_len), descending=True)
             batch_n_emb = batch_n_emb[indices]
             _, desorted_indices = torch.sort(indices, descending=False)
 
@@ -92,13 +99,15 @@ class GRLSTM(nn.Module):
 
             for lstm in self.lstm_list[:-1]:
                 out_n_emb, _ = lstm(batch_emb_n_pack)
-                out_n_emb_pad, out_n_emb_len = rnn_utils.pad_packed_sequence(out_n_emb, batch_first=self.batch_first)
+                out_n_emb_pad, out_n_emb_len = rnn_utils.pad_packed_sequence(
+                    out_n_emb, batch_first=self.batch_first)
                 out_n_emb_pad = batch_n_emb + F.relu(out_n_emb_pad)
                 batch_emb_n_pack = rnn_utils.pack_padded_sequence(out_n_emb_pad,
                                                                   out_n_emb_len,
                                                                   batch_first=self.batch_first)
             out_n_emb, _ = self.lstm_list[-1](batch_emb_n_pack)
-            out_n_emb_pad, out_n_emb_len = rnn_utils.pad_packed_sequence(out_n_emb, batch_first=self.batch_first)
+            out_n_emb_pad, out_n_emb_len = rnn_utils.pad_packed_sequence(
+                out_n_emb, batch_first=self.batch_first)
 
             out_n_emb_pad = out_n_emb_pad[desorted_indices]
             idx = (torch.LongTensor(batch_n_len) - 1).view(-1, 1).expand(
@@ -113,8 +122,10 @@ class GRLSTM(nn.Module):
             if batch_traj_poi is not None:
                 batch_traj_poi_flatten = batch_traj_poi.reshape(-1)
                 batch_traj_poi_flatten = torch.unique(batch_traj_poi_flatten)
-                batch_traj_poi_edge_index = self._construct_edge_index(batch_traj_poi_flatten)
-                embedding_weight = self.gat(self.poi_features, batch_traj_poi_edge_index)
+                batch_traj_poi_edge_index = self._construct_edge_index(
+                    batch_traj_poi_flatten)
+                embedding_weight = self.gat(
+                    self.poi_features, batch_traj_poi_edge_index)
                 traj_poi_emb = embedding_weight[batch_traj_poi]
             else:
                 traj_poi_emb = None
