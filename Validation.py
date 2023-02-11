@@ -32,12 +32,14 @@ def eval_model():
     train_x, train_y = load_traindata(args.train_file)
     val_x, val_y = load_valdata(args.val_file)
 
-    emb_train = torch.zeros((len(train_x), args.latent_dim), device=device, requires_grad=False)
+    emb_train = torch.zeros((len(train_x), args.latent_dim),
+                            device=device, requires_grad=False)
 
     K = [1, 5, 10, 20, 50]
-    model = GRLSTM(args.nodes, args.latent_dim, device, args.poi_file, batch_first=True).to(device)
+    model = GRLSTM(args, device, batch_first=True).to(device)
 
-    rec = torch.zeros((val_x.shape[0], len(K)), device=device, requires_grad=False)
+    rec = torch.zeros((val_x.shape[0], len(K)),
+                      device=device, requires_grad=False)
 
     data_loader_train = TrainDataValLoader(args.train_file, args.batch_size)
     data_loader_val = ValValueDataLoader(args.val_file, args.batch_size)
@@ -60,15 +62,18 @@ def eval_model():
 
         for batch_id, (batch_x, batch_y, batch_x_len, idx_list) in enumerate(pbar):
             batch_x = batch_x.to(device)
-            last_output_emb, _, _ = model((batch_x, batch_x_len, None, None), True)
+            last_output_emb, _, _ = model(
+                (batch_x, batch_x_len, None, None), True)
             emb_train[idx_list, :] = last_output_emb.detach()
 
         pbar = tqdm(data_loader_val)
 
         for batch_id, (batch_x, batch_y, batch_x_len, idx_list) in enumerate(pbar):
             batch_x = batch_x.to(device)
-            last_output_emb, _, _ = model((batch_x, batch_x_len, None, None), True)
-            rec[idx_list, :] = recall(last_output_emb, emb_train, batch_y, device, K).detach()
+            last_output_emb, _, _ = model(
+                (batch_x, batch_x_len, None, None), True)
+            rec[idx_list, :] = recall(
+                last_output_emb, emb_train, batch_y, device, K).detach()
 
         rec_ave = rec.mean(axis=0)
         for recs in rec_ave:

@@ -32,7 +32,7 @@ def eval_model():
 
     emb_train = np.zeros((len(train_x), args.latent_dim))
 
-    model = GRLSTM(args.nodes, args.latent_dim, device, args.poi_file, batch_first=True).to(device)
+    model = GRLSTM(args, device, batch_first=True).to(device)
 
     epoch = open('GRLSTM_eva.log').read().splitlines()[-1][-3:]
 
@@ -59,7 +59,8 @@ def eval_model():
     for batch_id, (batch_x, batch_y, batch_x_len, idx_list) in enumerate(data_loader_val):
         batch_x = batch_x.to(device)
         last_output_emb, _, _ = model((batch_x, batch_x_len, None, None), True)
-        rec[idx_list, :] = recall(last_output_emb.cpu().detach().numpy(), emb_train, batch_y, K)
+        rec[idx_list, :] = recall(
+            last_output_emb.cpu().detach().numpy(), emb_train, batch_y, K)
 
     rec_ave = rec.mean(axis=0)
     for rec in rec_ave:

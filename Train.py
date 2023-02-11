@@ -12,9 +12,10 @@ import random
 def train():
     device = torch.device('cuda' if args.gpu >= 0 else 'cpu')
 
-    train_data_loader = TrainValueDataLoader(args.train_file, args.poi_file, args.batch_size)
+    train_data_loader = TrainValueDataLoader(
+        args.train_file, args.poi_file, args.batch_size)
 
-    model = GRLSTM(args.nodes, args.latent_dim, device, args.poi_file, batch_first=True)
+    model = GRLSTM(args, device, batch_first=True)
 
     trainer = Trainer(
         model=model,

@@ -10,25 +10,29 @@ import numpy as np
 
 
 class GRLSTM(nn.Module):
-    def __init__(self, nodes, latent_dim, device, poi_file, batch_first=True):
+    def __init__(self, args, device, batch_first=True):
         super(GRLSTM, self).__init__()
-        self.latent_dim = latent_dim
+        self.nodes = args.nodes
+        self.latent_dim = args.latent_dim
         self.device = device
         self.batch_first = batch_first
+        self.num_heads = args.num_heads
 
         logging.info('Initializing model: latent_dim=%d' % self.latent_dim)
 
-        self.poi_neighbors = np.load(poi_file, allow_pickle=True)['neighbors']
+        self.poi_neighbors = np.load(
+            args.poi_file, allow_pickle=True)['neighbors']
 
-        self.poi_features = torch.randn(nodes, latent_dim).to(self.device)
+        self.poi_features = torch.randn(
+            self.nodes, self.latent_dim).to(self.device)
 
         self.lstm_list = nn.ModuleList([
-            nn.LSTM(input_size=latent_dim, hidden_size=latent_dim,
+            nn.LSTM(input_size=self.latent_dim, hidden_size=self.latent_dim,
                     num_layers=1, batch_first=True)
             for _ in range(args.lstm_layers)
         ])
 
-        self.gat = GATConv(in_channels=latent_dim, out_channels=16,
+        self.gat = GATConv(in_channels=self.latent_dim, out_channels=16,
                            heads=8, dropout=0.1, concat=True)
 
     def _construct_edge_index(self, batch_x_flatten):
