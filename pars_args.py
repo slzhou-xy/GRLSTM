@@ -27,7 +27,7 @@ parser.add_argument('--latent_dim',     type=int,   default=128)
 parser.add_argument('--num_heads',      type=int,   default=8)
 parser.add_argument('--lstm_layers',    type=int,   default=4)
 parser.add_argument('--n_epochs',       type=int,   default=300)
-parser.add_argument('--batch_size',     type=int,   default=512)
+parser.add_argument('--batch_size',     type=int,   default=256)
 parser.add_argument('--lr',             type=float, default=5e-4,
                     help='5e-4 for Beijing, 1e-3 for Newyork')  # 2e-3
 parser.add_argument('--save_epoch_int', type=int,   default=1)
