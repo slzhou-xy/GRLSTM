@@ -11,7 +11,7 @@ python construct_KG.py
 
 2. move file ***bj(or ny)_KG_graph.txt*** into ***KGE/datasets/beijing(or newyork)/kg*** and rename ***train.txt***
 
-3. create a empty file named ***text.txt***
+3. create a empty file and name ***test.txt***
 
 4. create a file named ***r_map.txt*** and copy the follow text
 ```shell
