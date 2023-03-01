@@ -25,7 +25,7 @@ def construct_e_map():
     np.savetxt(args.datapath + args.dataset + '_e_map.txt', data, fmt='%d %d')
 
 
-def tra_direted_edge():
+def tra_directed_edge():
     tra_list = np.load(args.datapath + args.dataset + '_tra.npy', allow_pickle=True)
     T = sp.lil_matrix((args.nodes, args.nodes), dtype=bool)
     for idx, tra in enumerate(tra_list):
@@ -118,6 +118,6 @@ def contruct_directed_knowledge_graph():
 if __name__ == '__main__':
     data_clean()
     construct_e_map()
-    tra_direted_edge()
+    tra_directed_edge()
     find_directed_neighbors()
     contruct_directed_knowledge_graph()
