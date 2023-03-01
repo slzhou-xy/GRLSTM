@@ -1,3 +1,0 @@
-road 0
-traj_in 1
-traj_not_in 2

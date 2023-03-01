@@ -1,0 +1,55 @@
+2023-03-01 16:56:07,477 - root - INFO - Flag Values:
+{
+    "L1_flag": true,
+    "batch_size": 512,
+    "ckpt_path": "./log/",
+    "clipping_max_value": 5.0,
+    "data_path": "./datasets/",
+    "dataset": "beijing",
+    "early_stopping_steps_to_wait": 45750,
+    "embedding_size": 128,
+    "eval_interval_steps": 9150,
+    "eval_only_mode": false,
+    "experiment_name": "beijing-transh-1677660967",
+    "filter_wrong_corrupted": false,
+    "has_visualization": false,
+    "is_report": false,
+    "joint_ratio": 0.5,
+    "kg_lambda": 1.0,
+    "kg_test_files": "test.txt",
+    "l2_lambda": 0.0,
+    "learning_rate": 0.001,
+    "learning_rate_decay_when_no_progress": 0.5,
+    "load_ckpt_file": null,
+    "load_experiment_name": null,
+    "log_level": "debug",
+    "log_path": "./log/",
+    "margin": 1.0,
+    "max_queue": 10,
+    "model_type": "transh",
+    "momentum": 0.9,
+    "negtive_samples": 1,
+    "norm_lambda": 1.0,
+    "num_preferences": 4,
+    "num_processes": 1,
+    "optimizer_type": "Adam",
+    "rec_test_files": null,
+    "seed": 3,
+    "share_embeddings": false,
+    "topn": 10,
+    "training_steps": 915000,
+    "use_st_gumbel": false,
+    "version": "",
+    "visualization_port": 8097
+}
+2023-03-01 16:56:10,503 - root - INFO - Totally 1366016 train triples, 0 eval triples in files: ./datasets/beijing\kg\test.txt!
+2023-03-01 16:56:10,523 - root - INFO - successfully load 28342 entities and 3 relations!
+2023-03-01 16:56:11,244 - root - INFO - Building model.
+2023-03-01 16:56:11,438 - root - INFO - Architecture: TransHModel(
+  (ent_embeddings): Embedding(28342, 128)
+  (rel_embeddings): Embedding(3, 128)
+  (norm_embeddings): Embedding(3, 128)
+)
+2023-03-01 16:56:11,439 - root - INFO - Total params: 3628544.0
+2023-03-01 16:56:11,439 - root - INFO - One epoch is 2668 steps.
+2023-03-01 16:56:11,440 - root - INFO - Training.

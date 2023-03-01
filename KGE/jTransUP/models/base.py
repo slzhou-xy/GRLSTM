@@ -24,7 +24,7 @@ def get_flags():
     gflags.DEFINE_enum("model_type", "transh", ["transup", "bprmf", "fm",
                                                 "transe", "transh", "transr", "transd",
                                                 "cfkg", "cke", "cofm", "jtransup"], "")
-    gflags.DEFINE_enum("dataset", "gowalla", ["ml1m", "dbbook2014", "amazon-book", "last-fm", "yelp2018", 'gowalla', 'foursquare'],
+    gflags.DEFINE_enum("dataset", "beijing", ["ml1m", "dbbook2014", "amazon-book", "last-fm", "yelp2018", 'gowalla', 'foursquare', 'beijing', 'newyork'],
                        "including ratings.csv, r2kg.tsv and a kg dictionary containing kg_hop[0-9].dat")
     gflags.DEFINE_bool(
         "filter_wrong_corrupted",
@@ -33,14 +33,14 @@ def get_flags():
     gflags.DEFINE_bool("share_embeddings", False, "")
     gflags.DEFINE_bool("use_st_gumbel", False, "")
     gflags.DEFINE_integer("max_queue", 10, ".")
-    gflags.DEFINE_integer("num_processes", 1, ".")  # default: 4  什么意思？
+    gflags.DEFINE_integer("num_processes", 1, ".")
 
     gflags.DEFINE_float("learning_rate", 0.001, "Used in optimizer.")
     gflags.DEFINE_float("norm_lambda", 1.0, "decay of joint model.")
     gflags.DEFINE_float("kg_lambda", 1.0, "decay of kg model.")
     gflags.DEFINE_integer(
         "early_stopping_steps_to_wait",
-        45750,  # 70000  # 45750: 5个epoch不下降则停止训练
+        45750,  # 70000  # 45750
         "How many times will lr decrease? If set to 0, it remains constant.")
     gflags.DEFINE_bool(
         "L1_flag",
@@ -51,8 +51,8 @@ def get_flags():
         False,
         "If set to True, use L1 distance as dissimilarity; else, use L2.")
     gflags.DEFINE_float("l2_lambda", 0, "")  # 1e-5
-    gflags.DEFINE_integer("embedding_size", 128, ".")  # 64
-    gflags.DEFINE_integer("negtive_samples", 1, ".")  #
+    gflags.DEFINE_integer("embedding_size", 128, ".")
+    gflags.DEFINE_integer("negtive_samples", 1, ".")
     gflags.DEFINE_integer("batch_size", 512, "Minibatch size.")  # 512
     gflags.DEFINE_enum("optimizer_type", "Adam", ["Adam", "SGD", "Adagrad", "Rmsprop"], "")  # Adagrad
     gflags.DEFINE_float("learning_rate_decay_when_no_progress", 0.5,
@@ -79,7 +79,7 @@ def get_flags():
     gflags.DEFINE_string("rec_test_files", None, "multiple filenames separated by ':'.")
     gflags.DEFINE_string("kg_test_files", "test.txt", "multiple filenames separated by ':'.")
     gflags.DEFINE_string("log_path", None, "")  # None "log/"
-    gflags.DEFINE_string("version", "Porto_sub", "")
+    gflags.DEFINE_string("version", "", "")
     gflags.DEFINE_enum("log_level", "debug", ["debug", "info"], "")
 
 
