@@ -1,4 +1,4 @@
-# GRLSTM, AAAI 2023
+# GRLSTM: Trajectory Similarity Computation with Graph-based Residual LSTM, AAAI 2023
 
 ## construct knowledge graph
 ```shell
@@ -19,7 +19,6 @@ road 0
 traj_in 1
 traj_not_in 2
 ```
-***Our file contains the processed data.***
 
 ## train knowledge graph embedding
 ```shell
