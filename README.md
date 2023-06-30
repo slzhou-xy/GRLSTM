@@ -1,4 +1,4 @@
-# GRLSTM: Trajectory Similarity Computation with Graph-based Residual LSTM, AAAI 2023
+# [AAAI2023] GRLSTM: Trajectory Similarity Computation with Graph-based Residual LSTM
 
 ## construct knowledge graph
 ```shell
