@@ -1,5 +1,8 @@
 # [AAAI 2023] GRLSTM: Trajectory Similarity Computation with Graph-based Residual LSTM
 
+This is a PyTorch implementation of GRLSTM, as described in our paper: Silin Zhou, Jing Li, Hao Wang, Shuo Shang, and Peng Han.
+
+
 ## construct knowledge graph
 ```shell
 cd utils
