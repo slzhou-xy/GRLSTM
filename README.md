@@ -6,7 +6,9 @@ This is a PyTorch implementation of GRLSTM, as described in our paper: Silin Zho
 ![Framework](framework.png#pic_center)
 
 ## Experiment
-![Exp](exp.png#pic_center)
+![Exp](exp.png#pic_center) /
+
+If you want to reproduce the results, please follow the steps below.
 
 ## construct knowledge graph
 ```shell
