@@ -3,10 +3,10 @@
 This is a PyTorch implementation of GRLSTM, as described in our paper: Silin Zhou, Jing Li, Hao Wang, Shuo Shang, and Peng Han.
 
 ## Framework
-![Framework](framework.png #pic_center)
+![Framework](framework.png#pic_center)
 
 ## Experiment
-![Exp](exp.png #pic_center)
+![Exp](exp.png#pic_center)
 
 ## construct knowledge graph
 ```shell
