@@ -8,15 +8,15 @@ This is a PyTorch implementation of GRLSTM, as described in our paper: Silin Zho
 ## Experiment
 ![Exp](exp.png#pic_center) 
 
-**If you want to reproduce the results, please follow the steps below.**
+## If you want to reproduce the results, please follow the steps below
 
-## construct knowledge graph
+### construct knowledge graph
 ```shell
 cd utils
 python construct_KG.py
 ```
 
-## move, rename, create files
+### move, rename, create files
 1. move file ***bj(or ny)_e_map.txt*** into ***KGE/datasets/beijing(or newyork)/kg*** and rename ***e_map.txt***
 
 2. move file ***bj(or ny)_KG_graph.txt*** into ***KGE/datasets/beijing(or newyork)/kg*** and rename ***train.txt***
@@ -30,13 +30,13 @@ traj_in 1
 traj_not_in 2
 ```
 
-## train knowledge graph embedding
+### train knowledge graph embedding
 ```shell
 cd KGE
 python run_knowledge_representation.py
 ```
 
-## construct fusion graph
+### construct fusion graph
 ```shell
 cd utils
 python construct_fusion_graph.py
