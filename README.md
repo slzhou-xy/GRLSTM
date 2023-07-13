@@ -3,10 +3,14 @@
 This is a PyTorch implementation of GRLSTM, as described in our paper: Silin Zhou, Jing Li, Hao Wang, Shuo Shang, and Peng Han.
 
 ## Framework
-![Framework](framework.png#pic_center)
+<div align=center>
+<img src="framework.png"/>
+</div>
 
 ## Experiment
-![Exp](exp.png#pic_center) 
+<div align=center>
+<img src="exp.png"/>
+</div>
 
 ## If you want to reproduce the results, please follow the steps below
 
