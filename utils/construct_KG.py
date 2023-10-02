@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.sparse as sp
 import argparse
+import pickle
 
 
 parser = argparse.ArgumentParser()
@@ -42,14 +43,16 @@ def tra_directed_edge():
 
 def find_directed_neighbors():
     neighbors = [[] for _ in range(args.nodes)]
-    e = np.loadtxt(args.datapath + args.dataset + '_e.txt', dtype=int)
+    e = np.loadtxt(args.datapath + args.dataset + '_e_unique.txt', dtype=int)
     for edge in e:
         neighbors[edge[0]].append(edge[1])
-    np.savez(args.datapath + args.dataset + '_poi_neighbors.npz', neighbors=neighbors)
+    # np.savez(args.datapath + args.dataset + '_poi_neighbors.npz', neighbors=neighbors)
+    pickle.dump(neighbors, open(args.datapath + args.dataset + '_poi_neighbors.pkl', 'wb')
 
 
 def contruct_directed_knowledge_graph():
-    neighbors = np.load(args.datapath + args.dataset + '_poi_neighbors.npz', allow_pickle=True)['neighbors']
+    # neighbors = np.load(args.datapath + args.dataset + '_poi_neighbors.npz', allow_pickle=True)['neighbors']
+    neighbors = pickle.load(open(args.datapath + args.dataset + '_poi_neighbors.pkl', 'rb'))
     lens = 0
     for n in neighbors:
         lens += len(n)
