@@ -41,6 +41,7 @@ traj_not_in 2
 cd KGE
 python run_knowledge_representation.py
 ```
+
 If you want to change hyper-parameters, please adjust them in /KGE/jTransUP/models/base.py.
 
 ### construct fusion graph
