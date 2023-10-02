@@ -16,6 +16,8 @@ Author list: Silin Zhou, Jing Li, Hao Wang, Shuo Shang, and Peng Han.
 
 ## If you want to reproduce the results, please follow the steps below
 
+## Attention: If you want to use other dataset, please do not apply map matching on trajectories. Only need to do is align the coordinate with road segment or intersection.
+
 ### construct knowledge graph
 ```shell
 cd utils
