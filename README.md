@@ -42,7 +42,9 @@ cd KGE
 python run_knowledge_representation.py
 ```
 
-If you want to change hyper-parameters, please adjust them in /KGE/jTransUP/models/base.py.
+If you want to change hyper-parameters, please adjust them in ***KGE/jTransUP/models/base.py***.
+
+The output file of KGE is in ***KGE/log***.
 
 ### construct fusion graph
 ```shell
