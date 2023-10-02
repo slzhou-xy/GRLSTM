@@ -279,7 +279,8 @@ def run(only_forward=False):
 
     # load data
     # kg_path = os.path.join(os.path.join(FLAGS.data_path, FLAGS.dataset), 'kg')
-    kg_path = os.path.join(os.path.join(os.path.join(FLAGS.data_path, FLAGS.dataset), 'kg'), FLAGS.version)
+    # kg_path = os.path.join(os.path.join(os.path.join(FLAGS.data_path, FLAGS.dataset), 'kg'), FLAGS.version)
+    kg_path = os.path.join(os.path.join(FLAGS.data_path, FLAGS.dataset), FLAGS.version)
     eval_files = []
     if FLAGS.kg_test_files:
         eval_files = FLAGS.kg_test_files.split(':')
