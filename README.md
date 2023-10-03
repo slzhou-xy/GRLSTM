@@ -17,8 +17,8 @@ Author list: Silin Zhou, Jing Li, Hao Wang, Shuo Shang, and Peng Han.
 ## If you want to reproduce the results, please follow the steps below
 
 #### Attention
-    1. If you want to use other dataset, please **do not** apply map matching on trajectories. Only need to do is align the coordinate with road segment or intersection.
-    2. How to obtain trajectory similarity labels, please refer to [Trajectory Similarity Join in Spatial Networks](https://dl.acm.org/doi/10.14778/3137628.3137630)
+1. If you want to use other dataset, please **do not** apply map matching on trajectories. Only need to do is align the coordinate with road segment or intersection.
+2. How to obtain trajectory similarity labels, please refer to [Trajectory Similarity Join in Spatial Networks](https://dl.acm.org/doi/10.14778/3137628.3137630)
 
 ### 
 
