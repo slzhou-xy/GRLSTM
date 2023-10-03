@@ -139,7 +139,6 @@ def TrainDataValLoader(train_file, batchsize):
 
         data_length = [len(sq) for sq in data]
         data = rnn_utils.pad_sequence(data, batch_first=True, padding_value=0)
-        label = rnn_utils.pad_sequence(label, batch_first=True, padding_value=0)
         return data, label, data_length, idx_list
 
     val_x, val_y = load_traindata(train_file)
