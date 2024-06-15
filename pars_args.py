@@ -25,7 +25,7 @@ parser.add_argument('--nodes',          type=int,   default=28342,
 # ===================== model ====================== #
 parser.add_argument('--latent_dim',     type=int,   default=128)
 parser.add_argument('--num_heads',      type=int,   default=8)
-parser.add_argument('--lstm_layers',    type=int,   default=6)
+parser.add_argument('--lstm_layers',    type=int,   default=4)
 parser.add_argument('--n_epochs',       type=int,   default=300)
 parser.add_argument('--batch_size',     type=int,   default=256)
 parser.add_argument('--lr',             type=float, default=5e-4,
