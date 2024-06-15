@@ -23,8 +23,14 @@ class GRLSTM(nn.Module):
         self.poi_neighbors = np.load(
             args.poi_file, allow_pickle=True)['neighbors']
 
-        self.poi_features = torch.randn(
-            self.nodes, self.latent_dim).to(self.device)
+        # self.poi_features = torch.randn(
+        #     self.nodes, self.latent_dim).to(self.device)
+        if not os.path.exists('data/poi_features.npy'):
+            poi_features = np.random.randn(self.nodes, self.latent_dim)
+            np.save('data/poi_features.npy', poi_features)
+        else:
+            poi_features = np.load('data/poi_features.npy')
+        self.poi_features = torch.tensor(poi_features, dtype=torch.float32).to(self.device)
 
         self.lstm_list = nn.ModuleList([
             nn.LSTM(input_size=self.latent_dim, hidden_size=self.latent_dim,
